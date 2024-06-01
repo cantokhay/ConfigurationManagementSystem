@@ -1,5 +1,4 @@
 # CaseStudy-SecilStore
-# Configuration Management System
 
 ## Overview
 
