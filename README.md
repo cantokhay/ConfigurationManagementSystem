@@ -24,9 +24,7 @@ The Configuration Management System is a dynamic configuration library that allo
 - **Configuration.Entities**: Contains entity definitions.
 - **Configuration.Web**: ASP.NET Core application for managing configurations via a web interface.
 
-## Setup Instructions
-
-### Prerequisites
+## Prerequisites
 
 - .NET 8 SDK
 - SQL Server (or other compatible database)
