@@ -5,13 +5,10 @@ namespace Configuration.DataAccess.Concrete
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=CAN-TOKHAY-MASA\\CANTOKHAY ;Database=SecilCaseDB; TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=CAN-TOKHAY-MASA\\CANTOKHAY ;Database=SecilCaseDB; User Id=sa;Password=230491Can.; TrustServerCertificate=True;");
         }
 
         public DbSet<ConfigurationEntity> Configurations { get; set; }

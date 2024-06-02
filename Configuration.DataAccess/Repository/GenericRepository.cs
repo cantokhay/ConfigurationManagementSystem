@@ -1,8 +1,5 @@
-﻿using Configuration.Data.Entities;
-using Configuration.DataAccess.Abstract;
+﻿using Configuration.DataAccess.Abstract;
 using Configuration.DataAccess.Concrete;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Immutable;
 using System.Linq.Expressions;
 
 namespace Configuration.DataAccess.Repository

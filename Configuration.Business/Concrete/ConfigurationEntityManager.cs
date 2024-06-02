@@ -70,6 +70,16 @@ namespace Configuration.Business.Concrete
             return _configurationEntityRepository.GetValue<T>(key);
         }
 
+        public IEnumerable<ConfigurationEntity> TSearch(string searchTerm)
+        {
+            return _configurationEntityRepository.GetAll()
+                .Where(c => c.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            c.ApplicationName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            c.Type.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            c.Value.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+
         public async Task TUpdateAsync(ConfigurationEntity entity)
         {
             entity.IsActive = true; //güncellenen entity'lerin default olarak aktif olmasını sağlıyorum.

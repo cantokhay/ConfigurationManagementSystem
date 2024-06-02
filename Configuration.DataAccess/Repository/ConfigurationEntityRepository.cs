@@ -6,18 +6,15 @@ namespace Configuration.DataAccess.Repository
 {
     public class ConfigurationEntityRepository : GenericRepository<ConfigurationEntity>, IConfigurationEntityRepository
     {
-        private readonly AppDbContext _context;
-
         public ConfigurationEntityRepository(AppDbContext context) : base(context)
         {
-            _context = context;
         }
 
         public T GetValue<T>(string key)
         {
+            using var _context = new AppDbContext();
             var entity = _context.Configurations.FirstOrDefault(c => c.IsActive && c.Name == key);
             return (T)Convert.ChangeType(entity.Value, typeof(T));
         }
     }
-
 }

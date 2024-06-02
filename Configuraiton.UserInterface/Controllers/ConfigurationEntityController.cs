@@ -1,4 +1,5 @@
-﻿using Configuration.Business.Abstract;
+﻿using AutoMapper;
+using Configuration.Business.Abstract;
 using Configuration.Data.Entities;
 using Configuration.UserInterface.VMs;
 using Microsoft.AspNetCore.Mvc;
@@ -8,15 +9,21 @@ namespace Configuration.UserInterface.Controllers
     public class ConfigurationEntityController : Controller
     {
         private IConfigurationService _configurationService;
+        private IMapper _mapper;
 
-        public ConfigurationEntityController(IConfigurationService configurationService)
+        public ConfigurationEntityController(IConfigurationService configurationService, IMapper mapper)
         {
             _configurationService = configurationService;
+            _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string searchTerm = null)
         {
-            var configurationList = _configurationService.TGetAll();
+            var configurationList = string.IsNullOrEmpty(searchTerm)
+                ? _configurationService.TGetAll().ToList()
+                : _configurationService.TSearch(searchTerm).ToList();
+
+            ViewData["searchTerm"] = searchTerm;
             return View(configurationList);
         }
 
@@ -58,16 +65,9 @@ namespace Configuration.UserInterface.Controllers
         [HttpPost]
         public IActionResult Edit(UpdateConfigurationEntityVM model)
         {
-            _configurationService.TUpdateAsync(new ConfigurationEntity()
-            {
-                Id = model.Id,
-                ApplicationName = model.ApplicationName,
-                IsActive = model.IsActive,
-                Name = model.Name,
-                Type = model.Type,
-                Value = model.Value
-            });
-            return View(model);
+            var configurationEntity = _mapper.Map<ConfigurationEntity>(model);
+            _configurationService.TUpdateAsync(configurationEntity);
+            return RedirectToAction("Index");
         }
 
         [HttpGet("{id}")]

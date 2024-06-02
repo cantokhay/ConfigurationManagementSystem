@@ -1,4 +1,5 @@
 ﻿using Configuration.Business.Abstract;
+using Configuration.Data.Entities;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Configuration.UserInterface.Hubs
@@ -14,7 +15,7 @@ namespace Configuration.UserInterface.Hubs
 
         public async Task SendConfigurationList()
         {
-            var configurationList = _configurationEntity.TGetAll();
+            List<ConfigurationEntity> configurationList = _configurationEntity.TGetAll().ToList();
             await Clients.All.SendAsync("ReceiveConfigurationList", configurationList);
 
         }
