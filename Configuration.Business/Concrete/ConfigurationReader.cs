@@ -10,7 +10,7 @@ namespace Configuration.Business.Concrete
         private readonly string _applicationName;
         private readonly int _refreshTimerInterval;
         private readonly string _connectionString;
-        private readonly IConfigurationEntityRepository _configurationEntityRepository;
+        private IConfigurationEntityRepository _configurationEntityRepository;
         private Dictionary<string, ConfigurationEntity> _configurationDictionary;
 
         public ConfigurationReader(string applicationName, int refreshTimerInterval, string connectionString)

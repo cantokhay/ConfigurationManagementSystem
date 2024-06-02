@@ -19,7 +19,6 @@ namespace Configuration.UserInterface.SeedData
                     context.Configurations.AddRange(
                         new ConfigurationEntity()
                         {
-                            Id = 1,
                             ApplicationName = "SERVICE-A",
                             Name = "SiteName",
                             Type = "string",
@@ -28,7 +27,6 @@ namespace Configuration.UserInterface.SeedData
                         },
                         new ConfigurationEntity()
                         {
-                            Id = 2,
                             ApplicationName = "SERVICE-B",
                             Name = "IsBasketEnabled",
                             Type = "bool",
@@ -37,7 +35,6 @@ namespace Configuration.UserInterface.SeedData
                         },
                         new ConfigurationEntity()
                         {
-                            Id = 3,
                             ApplicationName = "SERVICE-A",
                             Name = "MaxItemCount",
                             Type = "int",

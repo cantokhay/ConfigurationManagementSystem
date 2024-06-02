@@ -11,7 +11,7 @@ namespace Configuration.DataAccess.Concrete
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=CAN-TOKHAY-MASA\\CANTOKHAY ;initial Catalog=SecilCaseDB; Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=CAN-TOKHAY-MASA\\CANTOKHAY ;Database=SecilCaseDB; TrustServerCertificate=True;");
         }
 
         public DbSet<ConfigurationEntity> Configurations { get; set; }

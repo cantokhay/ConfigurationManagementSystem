@@ -1,4 +1,8 @@
+using Configuration.Business.Abstract;
+using Configuration.Business.Concrete;
+using Configuration.DataAccess.Abstract;
 using Configuration.DataAccess.Concrete;
+using Configuration.DataAccess.Repository;
 using Configuration.UserInterface.Hubs;
 using Configuration.UserInterface.SeedData;
 using System.Reflection;
@@ -13,10 +17,11 @@ builder.Services.AddDbContext<AppDbContext>();
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddTransient<IConfigurationService, ConfigurationReader>();
+builder.Services.AddTransient<IConfigurationEntityRepository, ConfigurationEntityRepository>();
+
 var app = builder.Build();
 
-//builder.Services.AddTransient<IConfigurationService, ConfigurationReader>();
-//builder.Services.AddTransient<IConfigurationEntityRepository, ConfigurationEntityRepository>();
 
 if (!app.Environment.IsDevelopment())
 {

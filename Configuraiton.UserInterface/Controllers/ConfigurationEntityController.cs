@@ -7,7 +7,7 @@ namespace Configuration.UserInterface.Controllers
 {
     public class ConfigurationEntityController : Controller
     {
-        private readonly IConfigurationService _configurationService;
+        private IConfigurationService _configurationService;
 
         public ConfigurationEntityController(IConfigurationService configurationService)
         {
