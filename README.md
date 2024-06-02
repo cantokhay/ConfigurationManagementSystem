@@ -18,11 +18,11 @@ The Configuration Management System is a dynamic configuration library with Sign
 
 ## Project Structure
 
+- **Onion Architechture**
 - **Configuration.Data**: Contains entity definitions.
 - **Configuration.DataAccess**: Manages database interactions using the repository pattern.
 - **Configuration.Business**: Contains business logic and configuration reading functionality.
 - **Configuration.UserInterface**: ASP.NET Core application for managing configurations via a web interface.
-- *Onion Architechture
 
 ### Clone the Repository
 
