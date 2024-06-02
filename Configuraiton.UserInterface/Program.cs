@@ -17,7 +17,7 @@ builder.Services.AddDbContext<AppDbContext>();
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddTransient<IConfigurationService, ConfigurationReader>();
+builder.Services.AddTransient<IConfigurationService, ConfigurationEntityManager>();
 builder.Services.AddTransient<IConfigurationEntityRepository, ConfigurationEntityRepository>();
 
 var app = builder.Build();

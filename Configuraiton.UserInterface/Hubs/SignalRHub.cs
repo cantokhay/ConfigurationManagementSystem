@@ -12,7 +12,7 @@ namespace Configuration.UserInterface.Hubs
             _configurationEntity = configurationEntity;
         }
 
-        public async Task SendData()
+        public async Task SendConfigurationList()
         {
             var configurationList = _configurationEntity.TGetAll();
             await Clients.All.SendAsync("ReceiveConfigurationList", configurationList);

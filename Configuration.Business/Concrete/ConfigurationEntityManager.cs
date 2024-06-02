@@ -5,22 +5,45 @@ using System.Linq.Expressions;
 
 namespace Configuration.Business.Concrete
 {
-    public class ConfigurationReader : IConfigurationService
+    public class ConfigurationEntityManager : IConfigurationService
     {
-        private readonly string _applicationName;
-        private readonly int _refreshTimerInterval;
-        private readonly string _connectionString;
-        private IConfigurationEntityRepository _configurationEntityRepository;
-        private Dictionary<string, ConfigurationEntity> _configurationDictionary;
 
-        public ConfigurationReader(string applicationName, int refreshTimerInterval, string connectionString)
+        private IConfigurationEntityRepository _configurationEntityRepository;
+
+        public ConfigurationEntityManager(IConfigurationEntityRepository configurationEntityRepository)
         {
-            _applicationName = applicationName;
-            _refreshTimerInterval = refreshTimerInterval;
-            _connectionString = connectionString;
+            _configurationEntityRepository = configurationEntityRepository;
+            LoadConfiguration();
         }
 
-        public IConfigurationEntityRepository configurationEntityRepository => _configurationEntityRepository;
+        private Dictionary<string, ConfigurationEntity> _configurationDictionary;
+
+        public class ConfigurationReader
+        {
+            private readonly string _applicationName;
+            private readonly int _refreshTimerInterval;
+            private readonly string _connectionString;
+
+            public ConfigurationReader(string applicationName, int refreshTimerInterval, string connectionString)
+            {
+                _applicationName = applicationName;
+                _refreshTimerInterval = refreshTimerInterval;
+                _connectionString = connectionString;
+            }
+        }
+
+        ConfigurationReader reader = new ConfigurationReader("MyApplication", 60, "connectionString");
+
+        private void LoadConfiguration()
+        {
+            _configurationDictionary = new Dictionary<string, ConfigurationEntity>();
+            var configurations = _configurationEntityRepository.GetAll();
+            foreach (var configuration in configurations)
+            {
+                _configurationDictionary.Add(configuration.Name, configuration);
+            }
+        }
+
         public async Task TAddAsync(ConfigurationEntity entity)
         {
             entity.IsActive = true; //yeni oluşturulan entity'lerin default olarak aktif olmasını sağlıyorum.

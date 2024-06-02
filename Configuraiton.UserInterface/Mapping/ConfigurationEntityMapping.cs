@@ -10,7 +10,6 @@ namespace Configuration.UserInterface.Mapping
         {
             CreateMap<ConfigurationEntity, CreateConfigurationEntityVM>().ReverseMap();
             CreateMap<ConfigurationEntity, UpdateConfigurationEntityVM>().ReverseMap();
-            CreateMap<ConfigurationEntity, ListConfigurationEntityVM>().ReverseMap();
         }
     }
 }

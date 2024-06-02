@@ -4,17 +4,16 @@
     ViewData["Title"] = "Index";
 }
 
-<script src="~/microsoft/signalr/dist/browser/signalr.min.js"></script>
+@* <script src="~/microsoft/signalr/dist/browser/signalr.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @* SignalR Scripts *@
 
-<script type="text/javascript">
+@*<script type="text/javascript">
 
     $(document).ready(() => {
-
-        var connection = new signalR.HubConnectionBuilder().build();
+        var connection = new signalR.HubConnectionBuilder().withUrl("/signalrhub").build();
         $("#connstatus").text(connection.state);
         connection.start().then(() => {
             $("#connstatus").text(connection.state);
@@ -24,64 +23,87 @@
         }).catch((err) => { console.error(err) });
 
         connection.on("ReceiveConfigurationList", (configurationList) => {
+            console.log("Received configuration list:", configurationList);
             let tablehtml = `<table class="table mt-3">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                #
-                                            </th>
-                                            <th>
-                                                Name
-                                            </th>
-                                            <th>
-                                                ApplicationName
-                                            </th>
-                                            <th>
-                                                Type
-                                            </th>
-                                            <th>
-                                                Value
-                                            </th>
-                                            <th>
-                                                IsActive
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>`;
-                $.each(configurationList, (index, item) => {
-                    tablehtml += `<tr>
-                                        <td>
-                                            ${item.Id}
-                                        </td>
-                                        <td>
-                                            ${item.Name}
-                                        </td>
-                                        <td>
-                                            ${item.ApplicationName}
-                                        </td>
-                                        <td>
-                                            ${item.Type}
-                                        </td>
-                                        <td>
-                                            ${item.Value}
-                                        </td>
-                                        <td>
-                                            ${item.IsActive}
-                                        </td>
-                                        <td>
-                                            <a asp-action="Edit" asp-route-id="${item.Id}">Edit</a>
-                                        </td>
-                                    </tr>`;
-                });
-                tablehtml += `</tbody></table>`;
-            $("#configurationTable").html(tablehtml);
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>ApplicationName</th>
+                                        <th>Type</th>
+                                        <th>Value</th>
+                                        <th>IsActive</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+            $.each(configurationList, (index, item) => {
+                tablehtml += `<tr>
+                                <td>${item.Id}</td>
+                                <td>${item.Name}</td>
+                                <td>${item.ApplicationName}</td>
+                                <td>${item.Type}</td>
+                                <td>${item.Value}</td>
+                                <td>${item.IsActive}</td>
+                                <td><a href="/ConfigurationEntity/Edit/${item.Id}">Edit</a></td>
+                              </tr>`;
+            });
+            tablehtml += `</tbody></table>`;
+            $("#configurationList").html(tablehtml);
         });
     });
 
-</script>
+</script> *@
 
 <div>
     <h1>Configuration Entities</h1>
-    <div id="configurationTable"></div>
-    <a asp-action="Create">Create New</a>
+    @* <div id="configurationList"></div> *@
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    ApplicationName
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Value
+                </th>
+                <th>
+                    IsActive
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.ApplicationName
+                    </td>
+                    <td>
+                        @item.Type
+                    </td>
+                    <td>
+                        @item.Value
+                    </td>
+                    <td>
+                        @item.IsActive
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+        <a asp-action="Create">Create New</a>
 </div>
